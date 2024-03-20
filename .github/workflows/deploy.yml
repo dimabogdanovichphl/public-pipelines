@@ -20,7 +20,7 @@ jobs:
         id: website
         run: |
           git fetch --tags --force
-          $version=$(git describe --tags --match '*.*.*' $(git rev-parse HEAD) | head -n 1)
+          version=$(git describe --tags --match '*.*.*' $(git rev-parse HEAD) | head -n 1)
           echo "version=$version" >> $env:GITHUB_OUTPUT  
       - name: Deploy web app
         run: |
