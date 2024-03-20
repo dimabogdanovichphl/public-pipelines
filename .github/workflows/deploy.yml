@@ -14,14 +14,21 @@ jobs:
     concurrency: job-${{ github.sha }}
     name: "Deploy"
     environment: ${{ github.ref_name }}
+    defaults:
+      run:
+        shell: pwsh
     steps:
       - uses: actions/checkout@v3
       - name: Extract version from sha
         id: website
         run: |
           git fetch --tags --force
-          version=$(git describe --tags --match '*.*.*' $(git rev-parse HEAD) | head -n 1)
-          echo "version=$version" >> $env:GITHUB_OUTPUT  
+          $version=$(git tag --list '*.*.*' --points-at ${{ github.sha }} --sort=version:refname | tail -n1)
+          if ($version.StartsWith("v")) {
+            $version = $version.Substring(1)
+          }
+          echo "version=$version" >> $env:GITHUB_OUTPUT      
+
       - name: Deploy web app
         run: |
           echo "ENV: ${{ env }}"
