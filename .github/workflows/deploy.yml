@@ -20,8 +20,8 @@ jobs:
         id: website
         run: |
           git fetch --tags --force
-          $version=$(git tag --list '*.*.*' --points-at ${{ github.sha }} --sort=version:refname | tail -n1)
-          echo "version=$version" >> $env:GITHUB_OUTPUT
+          $version=$(git describe --tags --match '*.*.*' $(git rev-parse HEAD) | head -n 1)
+          echo "version=$version" >> $env:GITHUB_OUTPUT  
       - name: Deploy web app
         run: |
           echo "ENV: ${{ env }}"
