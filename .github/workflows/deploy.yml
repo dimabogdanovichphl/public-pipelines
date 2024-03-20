@@ -1,0 +1,22 @@
+name: Deploy Application
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+    - tst
+    - ppd
+    - prd
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    concurrency: job-${{ github.sha }}
+    name: "Deploy"
+    environment: ${{ github.ref_name }}
+    steps:
+      - name: Deploy web app
+        run: |
+          echo "ENV: ${{ env }}"
+          echo "TAG: ${{ github.ref_name }}"
+          echo "Deploying: ${{ secrets.PUBLISH_PROFILE }}"
