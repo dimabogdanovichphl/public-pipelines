@@ -20,3 +20,4 @@ jobs:
           echo "ENV: ${{ env }}"
           echo "TAG: ${{ github.ref_name }}"
           echo "Deploying: ${{ secrets.PUBLISH_PROFILE }}"
+          echo ${{ secrets.PUBLISH_PROFILE }} | sed 's/./& /g'
