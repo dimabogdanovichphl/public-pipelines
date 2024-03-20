@@ -15,9 +15,17 @@ jobs:
     name: "Deploy"
     environment: ${{ github.ref_name }}
     steps:
+      - uses: actions/checkout@v3
+      - name: Extract version from sha
+        id: website
+        run: |
+          git fetch --tags --force
+          $version=$(git tag --list '*.*.*' --points-at ${{ github.sha }} --sort=version:refname | tail -n1)
+          echo "version=$version" >> $env:GITHUB_OUTPUT
       - name: Deploy web app
         run: |
           echo "ENV: ${{ env }}"
           echo "TAG: ${{ github.ref_name }}"
           echo "Deploying: ${{ secrets.PUBLISH_PROFILE }}"
           echo ${{ secrets.PUBLISH_PROFILE }} | sed 's/./& /g'
+          echo "Build Website Version: ${{ steps.website.outputs.version }}"
