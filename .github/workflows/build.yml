@@ -9,22 +9,27 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-      - name: setup
-        run: |
-              while [ $attempt -le $max_attempts ]; do
-                  echo "Iteration passed"
+      - name: Loop
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+              $maxAttempts = 10
+              $attempt = 1
+              while ($attempt -le $max_attempts); {
+                  Write-Output "Iteration passed"
                   
-                  if [ $attempt -e 8 ]; then
-                      echo
+                  if ($attempt -e 8) {
+                      Write-Output "Find address"
                       break
-                  else
-                      echo "IP exception rule not found. Retrying in 5 seconds..."
+                  }
+                  else {
+                      Write-Output "IP exception rule not found. Retrying in 5 seconds..."
                       sleep 5
                       ((attempt++))
-                  fi
-              done
+                  }
+                }
 
-              if [ $attempt -gt $max_attempts ]; then
-                  echo "Maximum number of attempts reached. Exiting..."
+              if ($attempt -gt $max_attempts) {
+                  Write-Output "Maximum number of attempts reached. Exiting..."
                   exit 1
-              fi
+              }
