@@ -12,6 +12,7 @@ jobs:
       - name: Loop
         uses: azure/powershell@v1
         with:
+          azPSVersion: "latest"
           inlineScript: |
               $maxAttempts = 10
               $attempt = 1
