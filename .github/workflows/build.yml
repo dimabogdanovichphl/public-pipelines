@@ -25,7 +25,7 @@ jobs:
                   }
                   else {
                       Write-Output "IP exception rule not found. Retrying in 1 seconds..."
-                      Start-Sleep -Seconds 1
+                      Start-Sleep -Seconds 10
                       $attempt++
                   }
                 }
