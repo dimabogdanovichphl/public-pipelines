@@ -19,7 +19,7 @@ jobs:
               while ($attempt -le $maxAttempts) {
                   Write-Output "Iteration passed"
                   
-                  if ($attempt -eq 8) {
+                  if ($attempt -eq 15) {
                       Write-Output "Find address"
                       break
                   }
