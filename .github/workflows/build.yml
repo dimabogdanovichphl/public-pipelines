@@ -14,4 +14,20 @@ jobs:
     steps:
       - name: setup
         run: |
-          echo "finished building app"
+              while [ $attempt -le $max_attempts ]; do
+                  echo "Iteration passed"
+                  
+                  if [ $attempt -e 8 ]; then
+                      echo
+                      break
+                  else
+                      echo "IP exception rule not found. Retrying in 5 seconds..."
+                      sleep 5
+                      ((attempt++))
+                  fi
+              done
+
+              if [ $attempt -gt $max_attempts ]; then
+                  echo "Maximum number of attempts reached. Exiting..."
+                  exit 1
+              fi
