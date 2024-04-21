@@ -19,13 +19,13 @@ jobs:
               while ($attempt -le $max_attempts) {
                   Write-Output "Iteration passed"
                   
-                  if ($attempt -e 8) {
+                  if ($attempt -eq 8) {
                       Write-Output "Find address"
                       break
                   }
                   else {
-                      Write-Output "IP exception rule not found. Retrying in 5 seconds..."
-                      sleep 5
+                      Write-Output "IP exception rule not found. Retrying in 1 seconds..."
+                      sleep 1
                       ((attempt++))
                   }
                 }
