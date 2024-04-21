@@ -16,7 +16,7 @@ jobs:
           inlineScript: |
               $maxAttempts = 10
               $attempt = 1
-              while ($attempt -le $max_attempts) {
+              while ($attempt -le $maxAttempts) {
                   Write-Output "Iteration passed"
                   
                   if ($attempt -eq 8) {
@@ -30,7 +30,7 @@ jobs:
                   }
                 }
 
-              if ($attempt -gt $max_attempts) {
+              if ($attempt -gt $maxAttempts) {
                   Write-Output "Maximum number of attempts reached. Exiting..."
                   exit 1
               }
