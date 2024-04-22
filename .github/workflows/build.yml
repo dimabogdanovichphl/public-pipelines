@@ -10,27 +10,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Loop
-        uses: azure/powershell@v1
-        with:
-          azPSVersion: "latest"
-          inlineScript: |
-              $maxAttempts = 10
-              $attempt = 1
-              while ($attempt -le $maxAttempts) {
-                  Write-Output "Iteration passed"
-                  
-                  if ($attempt -eq 15) {
-                      Write-Output "Find address"
-                      break
-                  }
-                  else {
-                      Write-Output "IP exception rule not found. Retrying in 1 seconds..."
-                      Start-Sleep -Seconds 10
-                      $attempt++
-                  }
-                }
+        run: |
+          max_attempts=10
+          attempt=1
+      
+          while [ $attempt -le $max_attempts ]; do
+                
+              if [ $attempt -eq 8 ]; then
+                  echo
+                  break
+              else
+                  echo "IP exception rule not found. Retrying in 5 seconds..."
+                  sleep 5
+                  ((attempt++))
+              fi
+          done
 
-              if ($attempt -gt $maxAttempts) {
-                  Write-Output "Maximum number of attempts reached. Exiting..."
-                  exit 1
-              }
+          if [ $attempt -gt $max_attempts ]; then
+              echo "Maximum number of attempts reached. Exiting..."
+              exit 1
+          fi
